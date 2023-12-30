@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreScheduleRequest;
 use App\Models\Schedule;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,12 +32,26 @@ class ScheduleController extends Controller
         return view('pages.schedules.index', compact('schedules'));
     }
 
+    public function create(){
+        $subjects = Subject::all();
+        return view('pages.schedules.create',compact('subjects'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreScheduleRequest $request)
     {
         //
+        Schedule::create([
+            'student_id' => auth()->id(),
+            'subject_id'=> $request['subject_id'],
+            'schedule_date' => $request['schedule_date'],
+            'schedule_type' => $request['schedule_type'],
+
+        ]);
+
+        return redirect(route('schedule.index'))->with('success','Schedule created successfully');
     }
 
     /**
