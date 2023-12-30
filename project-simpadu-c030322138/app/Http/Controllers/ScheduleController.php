@@ -4,15 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $schedules = DB::table('schedules')
+            ->join('subjects', 'schedules.subject_id', '=', 'subjects.id')
+            ->when($request->input('subject'), function ($query, $subject) {
+                return $query->where('subjects.title', 'like', '%' . $subject . '%');
+            })
+            ->select(
+                'schedules.id as id',
+                'subjects.title as subject',
+                DB::raw('DATE_FORMAT(schedule_date, "%d %M %Y") as schedule_date'),
+                'schedule_type',
+            )
+            ->orderBy('id')
+            ->paginate(15);
+        return view('pages.schedules.index', compact('schedules'));
     }
 
     /**
