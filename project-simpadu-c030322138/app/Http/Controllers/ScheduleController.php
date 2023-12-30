@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleRequest;
+use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Schedule;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -37,6 +38,8 @@ class ScheduleController extends Controller
         return view('pages.schedules.create',compact('subjects'));
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */
@@ -62,11 +65,19 @@ class ScheduleController extends Controller
         //
     }
 
+    public function edit(Schedule $schedule)
+    {
+        $subjects = Subject::all();
+        return view('pages.schedules.edit',compact('subjects'))->with('schedule', $schedule);
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
+        $validate = $request->validated();
+        $schedule->update($validate);
+        return redirect()->route('schedule.index')->with('success', 'Schedule Edited Successfully');
         //
     }
 
