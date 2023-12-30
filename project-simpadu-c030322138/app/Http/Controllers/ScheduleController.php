@@ -87,5 +87,7 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         //
+        $schedule->delete();
+        return redirect(route('schedule.index'))->with('success','Schedule Deleted Successfully');
     }
 }
