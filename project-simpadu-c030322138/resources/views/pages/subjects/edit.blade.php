@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User')
+@section('title', 'Edit Subject')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -10,81 +10,67 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Edit User</h1>
+                <h1>Edit Subject</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Users</a></div>
-                    <div class="breadcrumb-item">Edit User</div>
+                    <div class="breadcrumb-item"><a href="#">Subjects</a></div>
+                    <div class="breadcrumb-item">Edit Subject</div>
                 </div>
             </div>
 
             <div class="section-body">
 
                 <div class="card">
-                    <form action="{{ route('user.update', $user) }}" method="POST">
+                    <form action="{{ route('subject.update', $subject) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
-                            <h4>Edit User</h4>
+                            <h4>Edit Subject</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Title</label>
                                 <input type="text"
-                                    class="form-control @error('name')
-                                    is-invalid
-                                @enderror"
-                                    name="name" value="{{ $user->name }}">
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                    class="form-control @error('title') is-invalid @enderror"
+                                    name="title" value="{{$subject->title}}">
+                                @error('title')
+                                    <div class="invalid-feedback"> {{ $message }} </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email"
-                                    class="form-control @error('email')
-                                    is-invalid
-                                @enderror"
-                                    name="email" value="{{ $user->email }}">
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" name="handphone" value="{{ $user->handphone }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Roles</label>
+                                <label class="form-label">Semester</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="roles" value="admin" class="selectgroup-input"
-                                            @if ($user->roles == 'admin') checked @endif>
-                                        <span class="selectgroup-button">Admin</span>
+                                        <input type="radio" name="semester" value="Ganjil" class="selectgroup-input"
+                                            @if ($subject->semester == 'Ganjil') checked @endif>
+                                        <span class="selectgroup-button">Ganjil</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="roles" value="dosen" class="selectgroup-input"
-                                            @if ($user->roles == 'dosen') checked @endif>
-                                        <span class="selectgroup-button">Dosen</span>
+                                    <input type="radio" name="semester" value="Genap" class="selectgroup-input"
+                                    @if ($subject->semester == 'Genap') checked @endif>
+                                        <span class="selectgroup-button">Genap</span>
                                     </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="roles" value="mahasiswa" class="selectgroup-input"
-                                            @if ($user->roles == 'mahasiswa') checked @endif>
-                                        <span class="selectgroup-button">Mahasiswa</span>
-                                    </label>
-
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label>Sks</label>
+                                <input type="number"
+                                    class="form-control @error('sks') is-invalid @enderror"
+                                    name="sks" value="{{$subject->sks}}">
+                                @error('sks')
+                                    <div class="invalid-feedback"> {{ $message }} </div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>Academic Year</label>
+                                <input type="text" class="form-control" name="academic_year" value="{{$subject->academic_year}}">
+                            </div>
                             <div class="form-group mb-0">
-                                <label>Address</label>
+                                <label>Description</label>
                                 <textarea class="form-control" data-height="150" name="address">
-                                    {{ $user->address }}
+                                    {{ $subject->description }}
                                 </textarea>
                             </div>
                         </div>

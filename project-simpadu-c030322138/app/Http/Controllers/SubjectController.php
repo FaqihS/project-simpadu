@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSubjectRequest;
+use App\Http\Requests\UpdateSubjectRequest;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -57,15 +58,22 @@ class SubjectController extends Controller
         //
     }
 
+
+
+    public function edit(Subject $subject)
+    {
+        return view('pages.subjects.edit')->with('subject', $subject);
+    }
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subject $subject)
+    public function update(UpdateSubjectRequest $request, Subject $subject)
     {
         //
         $validate = $request->validated();
-        $subject->save($validate);
-        return redirect()->route('subject.index')->with('success', 'Edit User Successfully');
+        $subject->update($validate);
+        return redirect()->route('subject.index')->with('success', 'Subject Edited Successfully');
     }
 
     /**
@@ -74,5 +82,8 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         //
+        //
+        $subject->delete();
+        return redirect()->route('subject.index')->with('success', 'Delete Subject Successfully');
     }
 }
