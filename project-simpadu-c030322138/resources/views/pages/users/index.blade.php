@@ -78,7 +78,7 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('user.edit', $user->id) }}'
-                                                            class="btn btn-sm btn-info btn-icon">
+                                                            class="btn btn-sm btn-info btn-icon" style="display: inline-flex; justify-content: space-around ; align-items: center; column-gap: 0.4rem;">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
@@ -88,8 +88,8 @@
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}" />
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
-                                                                <i class="fas fa-times"></i> Delete
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete" style="display: inline-flex; justify-content: space-around ; align-items: center; column-gap: 0.4rem;">
+                                                                <i class="fas fa-trash"></i> Delete
                                                             </button>
                                                         </form>
                                                     </div>

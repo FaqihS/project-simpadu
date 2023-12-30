@@ -1,3 +1,3 @@
   <div class="simple-footer">
-      Copyright &copy; simpadu-c030322999 2023
+      Copyright &copy; Simpadu-C030322138 2023
   </div>
