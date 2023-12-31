@@ -16,6 +16,9 @@ class ScheduleController extends Controller
     {
         $user = $request->user();
         $schedules = Schedule::where('student_id', '=', $user->id)->get();
+        if (!$schedules) {
+            return response()->json(['errors' => "Not Found"], 404);
+        }
         return ScheduleResource::collection($schedules->load('subject'));
     }
 
@@ -54,8 +57,11 @@ class ScheduleController extends Controller
         $user = $request->user();
         $schedule = Schedule::where('student_id', '=', $user->id)
         ->where('id','=',$id)
-        ->get();
+        ->first();
 
+        if (!$schedule) {
+            return response()->json(['errors' => "Not Found"], 404);
+        }
         return ScheduleResource::make($schedule->load('subject'));
 
     }
