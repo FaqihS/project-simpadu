@@ -24,6 +24,26 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'subject_id' => 'required|numeric',
+            'schedule_date' => 'required|string',
+            'schedule_type' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = $request->user();
+
+        $schedule = Schedule::create([
+            'subject_id'=>$request['subject_id'],
+            'schedule_date' => $request['schedule_date'],
+            'schedule_type' => $request['schedule_type'],
+            'student_id' => $user->id,
+        ]);
+
+        return ScheduleResource::make($schedule->load('subject'));
     }
 
     /**
