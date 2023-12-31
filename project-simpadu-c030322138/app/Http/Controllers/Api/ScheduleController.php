@@ -93,8 +93,19 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request,string $id)
     {
         //
+        $user = $request->user();
+        $schedule = Schedule::where('student_id', '=', $user->id)
+            ->where('id', '=', $id)
+            ->first();
+        if (!$schedule) {
+            return response()->json(['errors' => "Not Found"], 404);
+        }
+
+        $schedule->delete();
+
+        return response()->json(['message' => "Schedule deleted Successfully"], 203);
     }
 }
