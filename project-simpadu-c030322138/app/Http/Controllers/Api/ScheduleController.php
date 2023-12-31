@@ -65,7 +65,29 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'subject_id' => 'numeric',
+            'schedule_date' => 'string',
+            'schedule_type' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = $request->user();
+
+        $schedule = Schedule::where('student_id', '=', $user->id)
+            ->where('id', '=', $id)
+            ->first();
+
+        if (!$schedule) {
+            return response()->json(['errors' => "Not Found"], 404);
+        }
+
+        $schedule->update($request->only(['subject_id', 'schedule_date', 'schedule_type']));
+
+        return ScheduleResource::make($schedule->load('subject'));
     }
 
     /**
