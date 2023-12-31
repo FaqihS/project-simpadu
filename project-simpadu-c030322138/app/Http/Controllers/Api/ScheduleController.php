@@ -5,6 +5,7 @@ use App\Models\Schedule;
 use App\Http\Resources\ScheduleResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ScheduleController extends Controller
 {
@@ -23,7 +24,6 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $validator = Validator::make($request->all(), [
             'subject_id' => 'required|numeric',
             'schedule_date' => 'required|string',
@@ -49,9 +49,15 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request,string $id)
     {
-        //
+        $user = $request->user();
+        $schedule = Schedule::where('student_id', '=', $user->id)
+        ->where('id','=',$id)
+        ->get();
+
+        return ScheduleResource::make($schedule->load('subject'));
+
     }
 
     /**
