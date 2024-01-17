@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('subject', SubjectController::class);
     Route::resource('schedule', ScheduleController::class);
+    Route::resource('anggota', AnggotaController::class);
 
 });
 
